@@ -2,49 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../profile.dart';
+import '../add_profile_page.dart';
 import '../view/cat_list.dart';
 
 class GoogleSignin extends StatelessWidget {
   const GoogleSignin({Key? key}) : super(key: key);
 
-  // ↓ここから公式の処理を丸パクリ
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
+  Future<void> signInWithGoogle(BuildContext context) async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
     await googleUser?.authentication;
 
-    // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
 
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    try {
+      final UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // サインインが成功した後に画面遷移する
+      if (userCredential.user != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AddProfilePage()),
+        );
+      }
+    } catch (e) {
+      // サインインが失敗した場合のエラーハンドリング
+      print('Sign in with Google failed: $e');
+      // エラーの表示など、適切な処理を行ってください
+    }
   }
-  // ↑ここまで公式の処理を丸パクリ
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Google Login')),
       body: Center(
-        child: Column(children: <Widget>[
-          ElevatedButton(
-            onPressed: () async {
-              // サインイン画面を表示する
-              signInWithGoogle();
-              // 猫一覧画面を表示する
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => NewProfile()));
-            },
-            child: const Text('Google'),
-          )
-        ]),
+        child: Column(
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                signInWithGoogle(context);
+              },
+              child: const Text('Google'),
+            ),
+          ],
+        ),
       ),
     );
   }

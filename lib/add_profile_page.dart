@@ -8,22 +8,22 @@ import 'package:mobile_agi/view/cat_list.dart';
 import 'list_page.dart';
 
 
-class NewProfile extends StatelessWidget {
+class AddProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Firestore Add Sample',
-      home: NewProfilePage(),
+      home: AddProfilePage(),
     );
   }
 }
 
-class NewProfilePage extends StatefulWidget {
+class AddProfilePage extends StatefulWidget {
   @override
-  _MyFirestorePageState createState() => _MyFirestorePageState();
+  _AddProfilePageState createState() => _AddProfilePageState();
 }
 
-class _MyFirestorePageState extends State<NewProfilePage> {
+class _AddProfilePageState extends State<AddProfilePage> {
 
   final nameController = TextEditingController();
   final ageController = TextEditingController();

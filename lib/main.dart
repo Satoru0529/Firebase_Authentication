@@ -7,33 +7,45 @@ import 'firebase_options.dart';
 import 'list_page.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();   //Firebase初期化処理　ここから
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );                                           //Firebase初期化処理　ここまで
+  );
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    title: 'Flutter app',
-    home: StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // スプラッシュ画面などに書き換えても良い
-          return const SizedBox();
-        }
-        if (snapshot.hasData) {
-          // User が null でなない、つまりサインイン済みのホーム画面へ
-          return MyList();
-        }
-        // User が null である、つまり未サインインのサインイン画面へ
-        return GoogleSignin();
-      },
-    ),
-  );
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool isLoggedIn = false; // ログイン状態を追跡するフラグ
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoggedIn();
+  }
+
+  void checkLoggedIn() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    if (user != null) {
+      // ログイン済みの場合
+      setState(() {
+        isLoggedIn = true;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter app',
+      home: isLoggedIn ? MyList() : GoogleSignin(),
+    );
+  }
 }
