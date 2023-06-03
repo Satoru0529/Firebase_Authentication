@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mobile_agi/view/cat_list.dart';
+import 'package:mobile_agi/screen/chat_screen/chat_history_screen.dart';
 import 'auth/google_signin.dart';
 import 'firebase_options.dart';
-import 'list_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +44,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter app',
-      home: isLoggedIn ? MyList() : GoogleSignin(),
+      home: isLoggedIn ? ChatHistoryScreen() : GoogleSignin(),
     );
   }
 }

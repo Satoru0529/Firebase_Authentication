@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../add_profile_page.dart';
-import '../view/cat_list.dart';
+import '../screen/profile_screen/add_profile_screen.dart';
 
 class GoogleSignin extends StatelessWidget {
   const GoogleSignin({Key? key}) : super(key: key);
@@ -11,7 +10,7 @@ class GoogleSignin extends StatelessWidget {
   Future<void> signInWithGoogle(BuildContext context) async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication? googleAuth =
-    await googleUser?.authentication;
+        await googleUser?.authentication;
 
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
@@ -20,13 +19,13 @@ class GoogleSignin extends StatelessWidget {
 
     try {
       final UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithCredential(credential);
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
       // サインインが成功した後に画面遷移する
       if (userCredential.user != null) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AddProfilePage()),
+          MaterialPageRoute(builder: (context) => AddProfile()),
         );
       }
     } catch (e) {

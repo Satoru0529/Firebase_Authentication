@@ -3,51 +3,45 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mobile_agi/view/cat_list.dart';
 
-import 'list_page.dart';
-
+import '../chat_screen/chat_history_screen.dart';
 
 class AddProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Firestore Add Sample',
-      home: AddProfilePage(),
+      home: AddProfileScreen(),
     );
   }
 }
 
-class AddProfilePage extends StatefulWidget {
+class AddProfileScreen extends StatefulWidget {
   @override
-  _AddProfilePageState createState() => _AddProfilePageState();
+  _AddProfileScreenState createState() => _AddProfileScreenState();
 }
 
-class _AddProfilePageState extends State<AddProfilePage> {
-
+class _AddProfileScreenState extends State<AddProfileScreen> {
   final nameController = TextEditingController();
   final ageController = TextEditingController();
   final apikeyController = TextEditingController();
-  String name="";
-  String age="";
-  String apikey="";
+  String name = "";
+  String age = "";
+  String apikey = "";
 
   @override
   Widget build(BuildContext context) {
-
     //CollectionReference users = FirebaseFirestore.instance.collection('users');
     //DocumentReference users = FirebaseFirestore.instance.doc("documentPath");
 
-    DocumentReference users = FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid);
+    DocumentReference users = FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid);
 
     Future<void> addFirestoreUser() {
       // Call the user's CollectionReference to add a new user
       return users
-          .set({
-        'name': name,
-        'age': age,
-        'APIkey': apikey
-      })
+          .set({'name': name, 'age': age, 'APIkey': apikey})
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
     }
@@ -90,7 +84,9 @@ class _AddProfilePageState extends State<AddProfilePage> {
                 addFirestoreUser();
 
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => MyList()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChatHistoryScreen()));
               },
             ),
           ],

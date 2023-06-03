@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,43 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBqUYvZ_TAF7IN-ArpF1H-9K_sYaFfu7AI',
-    appId: '1:572951591986:web:0e138609d6d0f1ebae102b',
-    messagingSenderId: '572951591986',
-    projectId: 'mobile-agi',
-    authDomain: 'mobile-agi.firebaseapp.com',
-    storageBucket: 'mobile-agi.appspot.com',
-    measurementId: 'G-2LB19K1T7S',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB0mEaH9mglZp_lVo59hmv-LXA5oGdBUHw',
-    appId: '1:572951591986:android:c4c59bcded2ac827ae102b',
-    messagingSenderId: '572951591986',
-    projectId: 'mobile-agi',
-    storageBucket: 'mobile-agi.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBqo-BtMWZ3LKpbVpkDhT2S2eAH6QcjP1I',
-    appId: '1:572951591986:ios:be65186e13c2201aae102b',
-    messagingSenderId: '572951591986',
-    projectId: 'mobile-agi',
-    storageBucket: 'mobile-agi.appspot.com',
-    androidClientId: '572951591986-v0qs38k76adgi0bua9vr76b79puh72b1.apps.googleusercontent.com',
-    iosClientId: '572951591986-95vujte0ep585j83161etub186vopefj.apps.googleusercontent.com',
-    iosBundleId: 'com.example.mobileagi.mobileAgi',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBqo-BtMWZ3LKpbVpkDhT2S2eAH6QcjP1I',
-    appId: '1:572951591986:ios:95fefdc07a88fe7dae102b',
-    messagingSenderId: '572951591986',
-    projectId: 'mobile-agi',
-    storageBucket: 'mobile-agi.appspot.com',
-    androidClientId: '572951591986-v0qs38k76adgi0bua9vr76b79puh72b1.apps.googleusercontent.com',
-    iosClientId: '572951591986-ldefd42chb3kkm62iajmea3bimrc7gof.apps.googleusercontent.com',
-    iosBundleId: 'com.example.mobileagi.mobileAgi.RunnerTests',
+    apiKey: 'AIzaSyCO4Qhn09M30f5Iw4h_w9gUsOCzjIT7Ok0',
+    appId: '1:526149683823:android:0a8cd834f4cec886e3db9a',
+    messagingSenderId: '526149683823',
+    projectId: 'galirage-agi-4ec97',
+    storageBucket: 'galirage-agi-4ec97.appspot.com',
   );
 }
